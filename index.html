@@ -9,22 +9,7 @@
 </head>
 <body class="body" layout="row" ng-cloak>
 
-  <div layout="column" tabIndex="-1" role="main" flex>
-    <md-toolbar class="">
-      <div class="md-toolbar-tools">
-        Header
-      </div>
-    </md-toolbar>
-
-    <md-content md-scroll-y layout="column" flex>
-      <div ng-view layout-padding flex="noshrink">
-        <main></main>
-      </div>
-
-      <div layout="row" flex="noshrink" layout-align="center center"></div>
-    </md-content>
-
-  </div>
+  <main layout="column" tabIndex="-1" role="main" flex></main>
 
   <!-- Preload is (currently) only used for testing jQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>

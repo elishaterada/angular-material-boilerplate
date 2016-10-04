@@ -1,7 +1,35 @@
-<h1 class="md-headline">
-  {{ $ctrl.greeting }}
-</h1>
+<md-sidenav
+  class="md-sidenav-left"
+  md-component-id="leftNav"
+  md-whiteframe="4"
+>
+  <md-content>
 
-<md-button class="md-primary md-raised" ng-click="$ctrl.greet('Hello!')">
-  Hello!
-</md-button>
+    <div layout-padding>
+      <p class="md-body-1">Header</p>
+    </div>
+
+  </md-content>
+</md-sidenav>
+
+<div layout="column" flex>
+  <md-toolbar class="">
+    <div class="md-toolbar-tools">
+      <md-button
+        class="md-icon-button"
+        ng-click="$ctrl.toggleLeftNav()">
+        <md-icon>menu</md-icon>
+      </md-button>
+      <span>App Title</span>
+    </div>
+  </md-toolbar>
+
+  <md-content md-scroll-y layout="column" flex>
+    <div ng-view layout-padding flex="noshrink">
+      <sample></sample>
+    </div>
+
+    <div layout="row" flex="noshrink" layout-align="center center"></div>
+  </md-content>
+
+</div>
