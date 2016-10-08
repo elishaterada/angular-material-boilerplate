@@ -4,7 +4,8 @@ angular
   .module('app', [
     'ngAnimate',
     'ngMaterial',
-    'ngAria'
+    'ngAria',
+    'ui.router'
   ])
   .controller('AppCtrl', AppCtrl)
   .config(config)
@@ -13,7 +14,9 @@ angular
 
 function config (
   $animateProvider,
-  $mdThemingProvider
+  $mdThemingProvider,
+  $urlRouterProvider,
+  $stateProvider
 ) {
   // ng-animate disable method
   $animateProvider.classNameFilter(/^(?:(?!ng-animate-disabled).)*$/)
@@ -24,6 +27,25 @@ function config (
     .accentPalette('blue')
 
   $mdThemingProvider.setDefaultTheme('custom')
+
+  // Router Setup
+  $urlRouterProvider.otherwise('/notfound')
+  $urlRouterProvider.when('/', '/landing')
+
+  // State Setup
+  $stateProvider
+
+  // Landing
+    .state('landing', {
+      url: '',
+      component: 'landing'
+    })
+
+    // Not Found
+    .state('notfound', {
+      url: '/notfound',
+      component: 'notFound'
+    })
 }
 
 function run ($rootScope, $window) {
@@ -71,28 +93,32 @@ function MainCtrl ($mdSidenav, $timeout) {
   }
 }
 
-// Sample Component
+// Landing Component
 angular
   .module('app')
-  .component('sample', {
-    templateUrl: 'src/templates/sample.tpl.html',
-    controller: SampleCtrl
+  .component('landing', {
+    templateUrl: 'src/templates/landing.tpl.html',
+    controller: LandingCtrl
   })
 
-function SampleCtrl ($log) {
+function LandingCtrl () {
   var ctrl = this
 
   ctrl.$onInit = function () {
-    sample()
   }
+}
 
-  ctrl.greeting = 'Hello World'
+// Notfound Component
+angular
+  .module('app')
+  .component('notFound', {
+    templateUrl: 'src/templates/not-found.tpl.html',
+    controller: NotFoundCtrl
+  })
 
-  ctrl.greet = function (text) {
-    $log.debug(text)
-  }
+function NotFoundCtrl () {
+  var ctrl = this
 
-  function sample () {
-    $log.debug('Sample component is initialized!')
+  ctrl.$onInit = function () {
   }
 }
