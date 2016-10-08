@@ -1,21 +1,4 @@
-function config (
-  $mdThemingProvider
-) {
-  // Angular Material Setup
-  $mdThemingProvider.theme('custom')
-    .primaryPalette('deep-purple')
-    .accentPalette('blue')
-
-  $mdThemingProvider.setDefaultTheme('custom')
-}
-
-function run ($rootScope, $window) {
-  $rootScope._ = $window._
-}
-
-// Top level
-function AppCtrl () {
-}
+/* global _ */
 
 angular
   .module('app', [
@@ -26,14 +9,45 @@ angular
   .controller('AppCtrl', AppCtrl)
   .config(config)
   .run(run)
+  .constant('_', _)
+
+function config (
+  $animateProvider,
+  $mdThemingProvider
+) {
+  // ng-animate disable method
+  $animateProvider.classNameFilter(/^(?:(?!ng-animate-disabled).)*$/)
+
+  // Angular Material Setup
+  $mdThemingProvider.theme('custom')
+    .primaryPalette('deep-purple')
+    .accentPalette('blue')
+
+  $mdThemingProvider.setDefaultTheme('custom')
+}
+
+function run ($rootScope, $window) {
+}
+
+function AppCtrl () {
+}
 
 //  Main Component
+angular
+  .module('app')
+  .component('main', {
+    templateUrl: 'src/templates/main.tpl.html',
+    controller: MainCtrl
+  })
+
 function MainCtrl ($mdSidenav, $timeout) {
   var ctrl = this
 
   ctrl.toggleLeftNav = buildDelayedToggler('leftNav')
 
-  // Supplies a function that will continue to operate until the time is up.
+  ctrl.$onInit = function () {
+    // Functions to run on init
+  }
 
   function debounce (func, wait, context) {
     var timer
@@ -49,26 +63,28 @@ function MainCtrl ($mdSidenav, $timeout) {
     }
   }
 
-  // Build handler to open/close a SideNav; when animation finishes report completion in console
   function buildDelayedToggler (navID) {
     return debounce(function () {
-      // Component lookup should always be available since we are not using `ng-if`
       $mdSidenav(navID)
         .toggle()
     }, 200)
   }
 }
 
+// Sample Component
 angular
   .module('app')
-  .component('main', {
-    templateUrl: 'src/templates/main.tpl.html',
-    controller: MainCtrl
+  .component('sample', {
+    templateUrl: 'src/templates/sample.tpl.html',
+    controller: SampleCtrl
   })
 
-// Sample Component
 function SampleCtrl ($log) {
   var ctrl = this
+
+  ctrl.$onInit = function () {
+    sample()
+  }
 
   ctrl.greeting = 'Hello World'
 
@@ -77,19 +93,6 @@ function SampleCtrl ($log) {
   }
 
   function sample () {
-    $log.debug('App is initialized!')
+    $log.debug('Sample component is initialized!')
   }
-
-  function init () {
-    sample()
-  }
-
-  init()
 }
-
-angular
-  .module('app')
-  .component('sample', {
-    templateUrl: 'src/templates/sample.tpl.html',
-    controller: SampleCtrl
-  })
