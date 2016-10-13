@@ -4,6 +4,6 @@
 
 ## Setup Guide
 
-* Install packages: `npm install`
+* Install packages: `yarn`
 * Develop: `npm run dev`
 * Test: `npm test`
