@@ -74,7 +74,7 @@ function config (
     })
 }
 
-function run ($rootScope, $window) {
+function run () {
 }
 
 function AppCtrl () {
